@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
 import Image from "next/image";
-import { Button } from "./ui/button";
 import Link from "next/link";
 import { getRandomInterviewCover } from "@/lib/utils";
 import DisplayTechIcon from "./DisplayTechIcon";
+import { Button } from "../ui/button";
 
 const InterviewCard = ({
   interviewId,
