@@ -6,7 +6,7 @@ import DisplayTechIcon from "./DisplayTechIcon";
 import { Button } from "../ui/button";
 
 const InterviewCard = ({
-  interviewId,
+  id,
   userId,
   role,
   type,
@@ -57,11 +57,7 @@ const InterviewCard = ({
           <DisplayTechIcon techStack={techstack} />
           <Button className="btn-primary">
             <Link
-              href={
-                feedback
-                  ? `/interview/${interviewId}/feedback`
-                  : `/interview/${interviewId}`
-              }
+              href={feedback ? `/interview/${id}/feedback` : `/interview/${id}`}
             >
               {feedback ? "Check Feedback" : "View Interview"}
             </Link>
