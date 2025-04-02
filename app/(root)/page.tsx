@@ -3,8 +3,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { dummyInterviews } from "@/constants";
 import InterviewCard from "@/components/root/InterviewCard";
+import { getCurrentUser } from "@/lib/actions/auth.action";
+import {
+  getInterviewByUserId,
+  getLatestInterviews,
+} from "@/lib/actions/general.action";
 
-const page = () => {
+const page = async () => {
+  const user = await getCurrentUser();
+  const [userInterviews, latestInterviews] = await Promise.all([
+    await getInterviewByUserId(user.id!),
+    await getLatestInterviews({ userId: user.id! }),
+  ]);
+  const hasPastInterview = userInterviews?.length > 0;
+  const hasUpcomingInterview = latestInterviews?.length > 0;
   return (
     <>
       <section className="card-cta">
@@ -28,20 +40,31 @@ const page = () => {
       <section className="flex flex-col gap-6 mt-8">
         <h2>Your Interviews</h2>
         <div className="interviews-section">
-          {dummyInterviews.map((interview) => (
-            <InterviewCard {...interview} key={interview.id} />
-          ))}
-          {/* <p>You havn&apos;t taken any interview yet</p> */}
+          {hasPastInterview ? (
+            userInterviews.map((interview) => (
+              <InterviewCard {...interview} key={interview.id} />
+            ))
+          ) : (
+            <p>You havn&apos;t taken any interview yet</p>
+          )}
         </div>
       </section>
       <section className="flex flex-col gap-6 mt-8">
         <h2>Take an Interviews</h2>
         <div className="interviews-section">
+          {hasUpcomingInterview ? (
+            latestInterviews.map((interview) => (
+              <InterviewCard {...interview} key={interview.id} />
+            ))
+          ) : (
+            <p>There are no Interview available</p>
+          )}
+        </div>
+        {/* <div className="interviews-section">
           {dummyInterviews.map((interview) => (
             <InterviewCard {...interview} key={interview.id} />
           ))}
-          {/* <p>There are no Interview available</p> */}
-        </div>
+        </div> */}
       </section>
     </>
   );
