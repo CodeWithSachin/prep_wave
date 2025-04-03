@@ -1,21 +1,26 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp, getApp, getApps } from "firebase/app";
-import {getAuth} from 'firebase/auth'
-import {getFirestore} from 'firebase/firestore'
+import { getApp, getApps, initializeApp } from "firebase/app";
+// import { getAnalytics } from "firebase/analytics";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCL6DVhGEXrR_FdWHIbgX1I1o02dxjLIHk",
-  authDomain: "prepwave-a5248.firebaseapp.com",
-  projectId: "prepwave-a5248",
-  storageBucket: "prepwave-a5248.firebasestorage.app",
-  messagingSenderId: "132903657952",
-  appId: "1:132903657952:web:cbceab847f358f3e384b85",
-  measurementId: "G-KYP6NDVF3C"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-
-
 // Initialize Firebase
-const app = !getApps.length? initializeApp(firebaseConfig):getApp();
-export const auth = getAuth(app)
-export const db = getFirestore(app)
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+// const analytics = getAnalytics(app);
+
+export const auth = getAuth(app);
+export const db = getFirestore(app);
